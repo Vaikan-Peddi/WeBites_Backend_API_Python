@@ -15,10 +15,9 @@ def signup(user: schemas.UserCreate, db: Session = Depends(db.get_db)):
     return crud.create_user(db=db, user=user)
 
 @router.post('/signin', response_model=schemas.Token)
-async def signin(request: Request, db: Session = Depends(db.get_db)):
-    form_data = await request.json()
-    username = form_data.get("username")
-    password = form_data.get("password")
+async def signin(user_data: schemas.Signin, db: Session = Depends(db.get_db)):
+    username = user_data.get("username")
+    password = user_data.get("password")
 
     user = crud.get_user_by_username(db=db, username=username)
     if not user or not security.verify_password(password, user.hashed_pwd):
