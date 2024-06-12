@@ -22,3 +22,4 @@ class College(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True)
     state = Column(String, index=True)
+
