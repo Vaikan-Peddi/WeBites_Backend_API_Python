@@ -12,6 +12,8 @@ class UserCreate(UserBase):
 class UserInDB(UserBase):
     id: int
 
+    college_id: int = None
+
     class Config:
         orm_mode: True
 
@@ -29,3 +31,16 @@ class Signup(Signin):
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+class College(BaseModel):
+    name: str
+    state: str
+
+class CollegeInDB(BaseModel):
+    id: int
+
+    class Config:
+        orm_mode: True
+
+class CollegeResponse(CollegeInDB):
+    pass

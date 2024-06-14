@@ -11,10 +11,10 @@ class User(Base):
     email = Column(String, unique=True)
     hashed_pwd = Column(String)
 
-    college_id = Column(ForeignKey("colleges.id"))
+    college_id = Column(ForeignKey("colleges.id"), nullable=True)
 
 
-    college = relationship("colleges")
+    college = relationship("College")
 
 class College(Base):
     __tablename__ = "colleges"
