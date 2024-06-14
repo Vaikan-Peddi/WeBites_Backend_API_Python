@@ -5,3 +5,7 @@ sql
 sqlalchemy
 pydantic
 http-cookies
+
+# TODO
+
+update the get_current_user dependency function into a util.py module

@@ -31,7 +31,7 @@ def college_list(offset: int = 0, limit: int = 10, db: Session = Depends(db.get_
         'college_list': clg_list
     }
 
-@router.post('/list/{college_id}')
+@router.post('/choose/{college_id}')
 def select_college(college_id: int, curr_user: schemas.UserInDB = Depends(get_current_user), db: Session = Depends(db.get_db)):
     if curr_user.college_id is not None:
         return JSONResponse(content={
@@ -49,6 +49,24 @@ def select_college(college_id: int, curr_user: schemas.UserInDB = Depends(get_cu
         db.rollback()
         raise HTTPException(status_code=500, detail=str(e))
     
-    
 
-#TODO: Add an endpoint for changing college
+
+@router.post('/update/{college_id}')
+def update_college(college_id: int, curr_user: schemas.UserInDB = Depends(get_current_user), db: Session = Depends(db.get_db)):
+    if curr_user.college_id is None:
+        return JSONResponse(content={
+            'message': 'Register into a college first to update your college'
+        },
+        status_code=status.HTTP_400_BAD_REQUEST)
+    
+    try:
+        db_user = db.query(models.User).filter(models.User.id == curr_user.id).first()
+        db_user.college_id = college_id
+        db.commit()
+        return JSONResponse(content={
+            'message': f'Updated to college: {db_user.college.name}'
+        },
+        status_code=status.HTTP_200_OK)
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
