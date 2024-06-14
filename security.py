@@ -5,7 +5,7 @@ from typing import Optional
 
 SECRET_KEY = "Vaikan.p14"
 ALGORITHM = "HS256"
-EXPIRE_IN_MINUTES = 30
+EXPIRE_IN_DAYS = 30
 
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated="auto")
 
@@ -20,7 +20,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     if expires_delta:
         expire = datetime.now() + expires_delta
     else:
-        expire = datetime.now() + timedelta(minutes=EXPIRE_IN_MINUTES)
+        expire = datetime.now() + timedelta(days=EXPIRE_IN_DAYS)
 
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)

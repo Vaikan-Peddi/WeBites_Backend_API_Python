@@ -23,3 +23,9 @@ class College(Base):
     name = Column(String, unique=True, index=True)
     state = Column(String, index=True)
 
+class Vendor(Base):
+    __tablename__ = "vendor"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    mobile = Column(String, )
