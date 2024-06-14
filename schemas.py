@@ -1,10 +1,10 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr, field_validator, constr
 from typing import Optional
 
 class UserBase(BaseModel):
-    email: str
+    email: EmailStr
     username: str
-    mobile: str
+    mobile: constr(pattern=r'^\+91\d{10}$') # type: ignore
 
 class UserCreate(UserBase):
     password: str
@@ -12,7 +12,7 @@ class UserCreate(UserBase):
 class UserInDB(UserBase):
     id: int
 
-    college_id: int = None
+    college_id: int | None = None
 
     class Config:
         orm_mode: True
